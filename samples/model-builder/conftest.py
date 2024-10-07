@@ -1310,6 +1310,15 @@ def mock_index_endpoint():
 
 
 @pytest.fixture
+def mock_list_indexes(mock_index):
+    with patch.object(
+        aiplatform.MatchingEngineIndex, "list"
+    ) as mock_list_indexes:
+        mock_list_indexes.return_value = [mock_index, mock_index]
+        yield mock_list_indexes
+
+
+@pytest.fixture
 def mock_index_init(mock_index):
     with patch.object(aiplatform, "MatchingEngineIndex") as mock:
         mock.return_value = mock_index
